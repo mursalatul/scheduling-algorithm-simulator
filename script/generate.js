@@ -391,7 +391,7 @@ async function sjfSimulator(processIds, arrivalTimes, burstTimes) {
       const process = processes[idx];
       let targetBar = document.getElementById("P" + (process.originalIndex + 1));
       const burstTime = process.burstTime;
-      const intervalTime = 2000; // Adjust this value to control speed
+      const intervalTime = 1000; // Adjust this value to control speed
       const totalSteps = burstTime;
 
       // Update the progress bar for the current process
@@ -418,21 +418,24 @@ async function sjfSimulator(processIds, arrivalTimes, burstTimes) {
   }
 }
 
-function increaseBar(targetBar, burstTime, intervalTime) {
+async function increaseBar(targetBar, burstTime, intervalTime) {
   const totalSteps = burstTime;
   let currentWidth = 0;
 
   for (let j = 0; j <= totalSteps; j++) {
-    setTimeout(() => {
-      currentWidth = (j / totalSteps) * 100;
-      targetBar.style.width = `${currentWidth}%`;
-      targetBar.innerText = `${Math.round(currentWidth)}%`;
-    }, j * intervalTime);
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        currentWidth = (j / totalSteps) * 100;
+        targetBar.style.width = `${currentWidth}%`;
+        targetBar.innerText = `${Math.round(currentWidth)}%`;
+        resolve();
+      }, intervalTime); // wait for each interval before proceeding to the next step
+    });
   }
 }
 
 
-function sjfSimulator2(processIds, arrivalTimes, burstTimes) {
+async function sjfSimulator2(processIds, arrivalTimes, burstTimes) {
   const n = processIds.length;
   let placeHolder = document.getElementById("progressContainer");
 
@@ -451,5 +454,69 @@ function sjfSimulator2(processIds, arrivalTimes, burstTimes) {
     originalIndex: index,
   })).sort((a, b) => a.arrivalTime - b.arrivalTime);
 
-  console.log(processes)
+  let nextExecutionProcess = []
+  let nextExecutionProcessId = []
+  let completedProcess = []
+  // let targetBar = document.getElementById("P1");
+  let timePassed = processes[0].arrivalTime;
+  while (completedProcess.length != n) {
+    if (nextExecutionProcess.length == 0) {
+      for (let i = 0; i < n; i++) {
+        if (!completedProcess.includes(processes[i].id)) {
+          nextExecutionProcess.push(processes[i]);
+          nextExecutionProcessId.push(processes[i].id);
+          break;
+        }
+      }
+    }
+
+    let targetBar = document.getElementById("P" + nextExecutionProcess[0].id);
+    // increase the bar
+    const totalSteps = nextExecutionProcess[0].burstTime;
+    let currentWidth = 0;
+
+    // await updateProgressBar(targetBar, totalSteps);
+    // await increaseBar(targetBar, totalSteps, 1000);
+    for (let j = 0; j <= totalSteps; j++) {
+      setTimeout(() => {
+        const currentWidth = (j / totalSteps) * 100;
+        targetBar.style.width = `${currentWidth}%`;
+        targetBar.innerText = `${Math.round(currentWidth)}%`;
+      }, j * 1000);
+    }
+
+    // Wait for the current process to finish before starting the next
+    await sleep(totalSteps * 1000);
+
+    timePassed += nextExecutionProcess[0].burstTime;
+    completedProcess.push(nextExecutionProcess[0].id);
+    nextExecutionProcess.shift();
+    nextExecutionProcessId.shift();
+
+    let inQ = [];
+    for (let i = 0; i < n; i++) {
+      if (!completedProcess.includes(processes[i].id) && processes[i].arrivalTime <= timePassed && !nextExecutionProcessId.includes(processes[i].id)) {
+        inQ.push(processes[i]);
+      }
+    }
+
+    console.log("inq=", inQ, inQ.length);
+    console.log("nep=", nextExecutionProcess, nextExecutionProcess.length);
+    // Update the nextExecutionProcess with the sorted queue
+    // nextExecutionProcess.push(...inQ);
+    for (let i = 0; i < inQ.length; i++) {
+      nextExecutionProcess.push(inQ[i]);
+      nextExecutionProcessId.push(inQ[i].id);
+    }
+    // shorting the next execution queue
+    nextExecutionProcess.sort((a, b) => a.burstTime - b.burstTime);
+    // adding the ids to the nextExecutionProcessId
+    nextExecutionProcessId = []
+    for (let i = 0; i < nextExecutionProcess.length; i++) {
+      nextExecutionProcessId.push(nextExecutionProcess[i].id);
+    }
+    console.log("nep=", nextExecutionProcess, nextExecutionProcess.length);
+    console.log("cp=", completedProcess, completedProcess.length);
+  }
 }
+
