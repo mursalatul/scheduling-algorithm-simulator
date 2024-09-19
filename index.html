@@ -38,7 +38,7 @@
                 SJF
             </label>
         </div>
-        <div class="form-check">
+        <!-- <div class="form-check">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
             <label class="form-check-label" for="flexRadioDefault3">
                 Priority
@@ -49,7 +49,7 @@
             <label class="form-check-label" for="flexRadioDefault4">
                 Robinson
             </label>
-        </div>
+        </div> -->
 
         <!-- add process, arrival time, burst time -->
         <div>
@@ -119,6 +119,9 @@
         <!-- show avg waiting time-->
         <div id="showAVGWT"></div>
 
+        <!-- print button -->
+        <button onclick="printTable()" type="button" class="btn btn-success" style="display: none;" id="printbutton">Print Table</button>
+
         <!-- simulation section -->
 
         <!-- <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="50" aria-valuemin="0"
@@ -131,6 +134,8 @@
     </div>
     <script src="/script/add_input_table.js"></script>
     <script src="/script/generate.js"></script>
+    <script src="/script/scheduling_algorithms.js"></script>
+
 </body>
 
 </html>

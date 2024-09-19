@@ -1,4 +1,3 @@
-
 // generateArrays.js
 document.getElementById('generateButton').addEventListener('click', function () {
   // clear the output section
@@ -32,14 +31,16 @@ document.getElementById('generateButton').addEventListener('click', function () 
     // sjf
     sjf(processIds, arrivalTimes, burstTimes);
   }
-  else if (seletedAlgo.id == 'flexRadioDefault3') {
-    // priority
-  }
-  else {
-    // robinson
-  }
+
+  // show print button
+  showPrintButton();
 
 });
+
+function showPrintButton() {
+  document.getElementById("printbutton").style.display = "inline-block"; // Show the button
+}
+
 
 function clearOutput() {
   document.getElementById("selectedAlgoHeading").innerText = '';
@@ -429,4 +430,3 @@ async function sjfSimulator2(processIds, arrivalTimes, burstTimes) {
     console.log("cp=", completedProcess, completedProcess.length);
   }
 }
-
