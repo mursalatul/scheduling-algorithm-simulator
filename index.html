@@ -10,12 +10,11 @@
 </head>
 
 <body>
-    <div class="container border">
+    <div class="container">
         <!-- navbar section -->
-        <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
-                    <img src="/data/images/smartphone.png" alt="Logo" width="30" height="24"
+                    <img src="data/images/smartphone.png" alt="" width="30" height="24"
                         class="d-inline-block align-text-top">
                     Scheduling Algorithm Simulator
                 </a>
@@ -52,10 +51,10 @@
         </div> -->
 
         <!-- add process, arrival time, burst time -->
-        <div>
+        <div class="mt-5">
             <h3>Give Input</h3>
         </div>
-        <div class="row border">
+        <div class="row ">
             <div class="col-10">
                 <table class="table" id="processTable">
                     <thead>
@@ -97,7 +96,9 @@
         </div>
 
         <!-- show output -->
-        <h3>Output</h3>
+        <div class="mt-5">
+            <h3>Output</h3>
+        </div>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="simulationStatus" checked>
             <label class="form-check-label" for="flexCheckChecked">
@@ -120,7 +121,8 @@
         <div id="showAVGWT"></div>
 
         <!-- print button -->
-        <button onclick="printTable()" type="button" class="btn btn-success" style="display: none;" id="printbutton">Print Table</button>
+        <button onclick="printTable()" type="button" class="btn btn-success" style="display: none;"
+            id="printbutton">Print Table</button>
 
         <!-- simulation section -->
 
@@ -129,7 +131,34 @@
         <div class="progress-bar" style="width: 1%">1%</div> -->
         <div id="progressContainer" class="border"></div>
 
+        <!-- footer -->
+        <section class="mt-5">
+            <!-- Footer -->
+            <footer class="text-center text-white" style="background-color: #0a4275;">
+                <!-- Grid container -->
+                <div class="container p-4 pb-0">
+                    <!-- Section: CTA -->
+                    <section class="">
+                        <p class="d-flex justify-content-center align-items-center">
+                            <span class="me-3">Enhance Your Skill With Us</span>
+                            <!-- <button data-mdb-ripple-init type="button" class="btn btn-outline-light btn-rounded">
+                                Sign up!
+                            </button> -->
+                        </p>
+                    </section>
+                    <!-- Section: CTA -->
+                </div>
+                <!-- Grid container -->
 
+                <!-- Copyright -->
+                <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                    © 2024 Copyright:
+                    <a class="text-white" href="https://mursalatul.github.io/">Mursalatul Islam Pallob & Team</a>
+                </div>
+                <!-- Copyright -->
+            </footer>
+            <!-- Footer -->
+        </section>
 
     </div>
     <script src="/script/add_input_table.js"></script>
